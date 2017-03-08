@@ -5,6 +5,7 @@ import smtplib
 import socket
 from email.mime.text import MIMEText
 import datetime
+import yaml
 
 today = datetime.date.today()
 
@@ -17,10 +18,14 @@ ipaddr = split_data[split_data.index('src')+1]
 my_ip = 'Your ip is %s' %  ipaddr
 
 
+# Read Mail Config
+with open("config.yml", 'r') as configfile:
+    cfg = yaml.load(configfile)
+
 # Send E-Mail
-to = 'me@example.com'
-gmail_user = 'test@gmail.com'
-gmail_password = 'yourpassword'
+to = cfg['to']
+gmail_user = cfg['id']
+gmail_password = cfg['pw']
 smtpserver = smtplib.SMTP('smtp.gmail.com', 587)
 smtpserver.ehlo()
 smtpserver.starttls()
